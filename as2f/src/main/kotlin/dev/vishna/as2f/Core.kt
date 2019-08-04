@@ -20,11 +20,11 @@ const val dartI18NQuantity = "/dart_i18n_quantity.mvel"
 /**
  * Initial template this tool consumes
  */
-const val voyagerCodegen: ResourcePath = "/voyager-codegen.yaml"
+const val as2f: ResourcePath = "/as2f.yaml"
 
 fun bootstrapAs2fPatrolConfig(patrolFile: File) = if (File(pwd, "pubspec.yaml").exists()) {
     log.alert.."${patrolFile.name} not found, creating one for you..."
-    voyagerCodegen.asResource().saveAs(patrolFile.absolutePath)
+    as2f.asResource().saveAs(patrolFile.absolutePath)
     log.save.."${patrolFile.name} created, please edit it"
     true
 } else {

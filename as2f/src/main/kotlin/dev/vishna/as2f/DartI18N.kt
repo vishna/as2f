@@ -2,6 +2,7 @@ package com.eyeem.strings2arb
 
 import dev.vishna.as2f.SModel
 import dev.vishna.as2f.dartI18N
+import dev.vishna.as2f.dartfmt
 import dev.vishna.mvel.interpolate
 import dev.vishna.stringcode.asResource
 
@@ -9,7 +10,7 @@ class DartI18N(val languages: List<SModel>) {
     val locales : List<Locale> = languages.map { Locale(it.locale) }
     val supportedLocales : List<Locale> = locales.filter { it != Locale("en", "", "en") }
 
-    fun emit() : String = dartI18N.asResource().interpolate(this)!!
+    suspend fun emit() : String = dartI18N.asResource().interpolate(this)!!.dartfmt()
 }
 
 data class Locale(val code: String, val region: String, val value: String) {

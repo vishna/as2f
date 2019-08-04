@@ -1,5 +1,8 @@
 package dev.vishna.as2f
 
+import dev.vishna.kmnd.execute
+import dev.vishna.kmnd.weaveToBlocking
+import kotlinx.coroutines.coroutineScope
 import org.yaml.snakeyaml.Yaml
 import java.io.*
 
@@ -23,4 +26,24 @@ internal fun FilePath.asFile() : File {
     } else {
         File(pwd, this)
     }
+}
+
+suspend fun String.dartfmt() : String = coroutineScope {
+    // TODO add some sort of LRU cache for this
+    val dartOutputStream = ByteArrayOutputStream()
+    val result = listOf("dartfmt").execute { outputStream, inputStream, errorStream ->
+
+        outputStream.use {
+            this@dartfmt weaveToBlocking outputStream
+        }
+
+        inputStream weaveToBlocking dartOutputStream
+        errorStream weaveToBlocking System.err
+    }
+
+    if (result != 0) {
+        throw IllegalStateException("dartfmt returned exit code $result")
+    }
+
+    dartOutputStream.toByteArray().toString(Charsets.UTF_8)
 }
