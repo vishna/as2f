@@ -11,7 +11,7 @@ class CoreTest {
 
     @Test fun `test carrots`() = runBlocking<Unit> {
         val localizableEN = listOf(
-                BasicLocalizable("hello_world", "Hello World"),
+                BasicLocalizable("en", "hello_world", "Hello World"),
                 ArgsLocalizable("en", "hello_friend", "Hello \${friend}", listOf("friend")),
                 ArgsLocalizable("en", "hello_friend2", "Hello \${friend1} and \${friend2}", listOf("friend1", "friend2")),
                 QuantityLocalizable("en", "carrot", listOf("count"), listOf(
@@ -21,7 +21,7 @@ class CoreTest {
         )
 
         val localizablePL = listOf(
-                BasicLocalizable("hello_world", "Witaj świecie!"),
+                BasicLocalizable("pl","hello_world", "Witaj świecie!"),
                 ArgsLocalizable("pl", "hello_friend", "Cześć \${friend}", listOf("friend")),
                 ArgsLocalizable("pl", "hello_friend2", "Cześć \${friend1} i \${friend2}", listOf("friend1", "friend2")),
                 QuantityLocalizable("pl", "carrot", listOf("count"), listOf(

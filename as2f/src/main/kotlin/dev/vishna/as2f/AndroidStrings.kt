@@ -5,6 +5,7 @@ import org.w3c.dom.Node
 import org.w3c.dom.NodeList
 import java.io.File
 import java.io.InputStream
+import java.lang.IllegalArgumentException
 import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
@@ -166,7 +167,12 @@ fun BasicLocalizable.verifyWithParent(parent: SModel?) : BasicLocalizable? {
         return this
     }
 
-    val parentLocalizable = parent.findLocalizable<BasicLocalizable>(this.key)
+    val parentLocalizable = try {
+        parent.findLocalizable<BasicLocalizable>(this.key)
+    } catch (exception: ClassCastException) {
+        val base = parent.findLocalizable<Localizable>(this.key)
+        throw IllegalArgumentException("Translation type $this doesn't match the original: $base")
+    }
 
     if (parentLocalizable is BasicLocalizable) {
         return this
@@ -211,7 +217,7 @@ fun AndroidStrings.asSModel(parent: SModel? = null) : SModel {
 
         val args = dartValue.findArgs()
         if (args.isEmpty()) {
-            BasicLocalizable(dartKey, dartValue).verifyWithParent(parent)
+            BasicLocalizable(locale, dartKey, dartValue).verifyWithParent(parent)
         } else {
             ArgsLocalizable(locale, dartKey, dartValue, args).verifyWithParent(parent)
         }

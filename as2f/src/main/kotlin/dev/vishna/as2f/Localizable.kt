@@ -10,6 +10,7 @@ sealed class Localizable {
 }
 
 data class BasicLocalizable(
+        val locale: String,
         val key: String,
         val value: String
 ) : Localizable() {
