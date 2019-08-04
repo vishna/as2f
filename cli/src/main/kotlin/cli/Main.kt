@@ -17,18 +17,17 @@ fun main(args: CommandArgs) = args.patrol {
     }
 
     help {
-        "Code generation utility for the Voyager project."
+        "Parses Android resource strings and generates i18n dart code"
     }
 
     onInspection { scope, watchPoint, dryRun, runOnce ->
         scope.launch {
-//            generateCode(
-//                name = watchPoint.name,
-//                source = watchPoint.source,
-//                target = requireNotNull(watchPoint["target"] as String?) { "target value not provided in $watchPoint" },
-//                testTarget = watchPoint["testTarget"] as String?,
-//                dryRun = dryRun
-//            )
+            generateCode(
+                name = watchPoint.name,
+                source = watchPoint.source,
+                target = requireNotNull(watchPoint["target"] as String?) { "target value not provided in $watchPoint" },
+                dryRun = dryRun
+            )
         }.apply {
             inspectionJobs[watchPoint.name]?.cancel()
             inspectionJobs[watchPoint.name] = this

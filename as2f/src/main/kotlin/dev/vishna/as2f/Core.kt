@@ -1,5 +1,7 @@
 package dev.vishna.as2f
 
+import com.eyeem.strings2arb.DartI18N
+import com.eyeem.strings2arb.FolderCrawler
 import dev.vishna.emojilog.std.*
 import dev.vishna.mvel.interpolate
 import dev.vishna.stringcode.asResource
@@ -31,28 +33,30 @@ fun bootstrapAs2fPatrolConfig(patrolFile: File) = if (File(pwd, "pubspec.yaml").
     false
 }
 
-suspend fun generateCode(name: String, source: String, target: String, testTarget: String?, dryRun: Boolean) = supervisorScope {
+suspend fun generateCode(name: String, source: String, target: String, dryRun: Boolean) = supervisorScope {
 
     if (source.isBlank()) {
         throw IllegalStateException("No source value provided for $name")
     }
 
-    val mjolnirFile = source.asFile()
+    val resourcesDirectory = source.asFile()
 
-    if (!mjolnirFile.exists()) {
+    if (!resourcesDirectory.exists()) {
         throw IllegalStateException("Provided source file for $name doesn't exist")
     }
 
-    // TODO
+    val strings = FolderCrawler
+            .lookup(resourcesDirectory.absolutePath)
+            .map { AndroidStrings(it) }
 
-    val jobs = mutableListOf<Job>()
-    jobs += async { delay(500) }
-    if (!testTarget.isNullOrBlank()) {
-        jobs += async {
-          delay(500)
-        }
-    }
-    jobs.forEach { it.join() }
+    val stringsEn = strings.firstOrNull { it.locale == "en" }!!
+
+    val parentClass = stringsEn.asSModel()
+    val subClasses = strings.filter { it != stringsEn }.map { it.asSModel(parentClass) }
+
+    val dartI18N = DartI18N(listOf(parentClass) + subClasses)
+
+    dartI18N.emit().saveToTarget(target, dryRun)
 }
 
 private fun String.saveToTarget(target: String, dryRun: Boolean) {
