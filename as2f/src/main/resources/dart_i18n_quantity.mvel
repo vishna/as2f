@@ -1,0 +1,8 @@
+String @{key}(@{emitArgs()}) {
+    plural_rules.startRuleEvaluation(quantity);
+    final pluralCase = plural_rules.pluralRules["@{locale}"]() as plural_rules.PluralCase;
+    switch (pluralCase) {
+@foreach{item : items}      case plural_rules.PluralCase.@{item.quantity.value}: return "@{item.value}";@end{'\n'}
+      default: return "";
+    }
+  }

@@ -1,0 +1,83 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/src/plural_rules.dart' as plural_rules;
+
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: camel_case_types
+// ignore_for_file: prefer_single_quotes
+
+@foreach{language : languages}@{language.emit()}@end{'\n\n'}
+
+class $en extends S {
+  const $en();
+}
+
+class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
+  const GeneratedLocalizationsDelegate();
+
+  List<Locale> get supportedLocales {
+    return const <Locale>[
+@foreach{locale : locales}      Locale("@{locale.code}", @{locale.emitRegion()}),@end{'\n'}
+    ];
+  }
+
+  LocaleListResolutionCallback listResolution({Locale fallback}) {
+    return (List<Locale> locales, Iterable<Locale> supported) {
+      if (locales == null || locales.isEmpty) {
+        return fallback ?? supported.first;
+      } else {
+        return _resolve(locales.first, fallback, supported);
+      }
+    };
+  }
+
+  LocaleResolutionCallback resolution({Locale fallback}) {
+    return (Locale locale, Iterable<Locale> supported) {
+      return _resolve(locale, fallback, supported);
+    };
+  }
+
+  Locale _resolve(Locale locale, Locale fallback, Iterable<Locale> supported) {
+    if (locale == null || !isSupported(locale)) {
+      return fallback ?? supported.first;
+    }
+
+    final Locale languageLocale = Locale(locale.languageCode, "");
+    if (supported.contains(locale)) {
+      return locale;
+    } else if (supported.contains(languageLocale)) {
+      return languageLocale;
+    } else {
+      final Locale fallbackLocale = fallback ?? supported.first;
+      return fallbackLocale;
+    }
+  }
+
+  @override
+  Future<S> load(Locale locale) {
+    final String lang = getLang(locale);
+    if (lang != null) {
+      switch (lang) {
+@foreach{locale : locales}        case "@{locale.value}": return SynchronousFuture<S>(const @{'$'}@{locale.value}());@end{'\n'}
+        default:
+          // NO-OP.
+      }
+    }
+    return SynchronousFuture<S>(const S());
+  }
+
+  @override
+  bool isSupported(Locale locale) =>
+    locale != null && supportedLocales.contains(locale);
+
+  @override
+  bool shouldReload(GeneratedLocalizationsDelegate old) => false;
+}
+
+String getLang(Locale l) => l == null
+  ? null
+  : l.countryCode != null && l.countryCode.isEmpty
+    ? l.languageCode
+    : l.toString();

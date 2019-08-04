@@ -1,0 +1,9 @@
+class @{'$'}@{locale} extends S {
+  const @{'$'}@{locale}();
+
+  @override
+  TextDirection get textDirection => TextDirection.ltr;
+
+@foreach{localizable : localizables}  @override
+  @{localizable.emit()}@end{'\n'}
+}

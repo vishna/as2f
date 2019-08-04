@@ -12,25 +12,10 @@ import java.util.*
 
 private val log by lazy { defaultLogger() }
 
-/**
- * Template for the router paths
- */
-const val dartVoyagerPathsClass: ResourcePath = "/dart_voyager_paths_class.mvel"
-
-/**
- * Template for the automated test classes
- */
-const val dartVoyagerTests: ResourcePath = "/dart_voyager_tests.mvel"
-
-/**
- * Template for the automated scenario class
- */
-const val dartVoyagerTestScenarioClass: ResourcePath = "/dart_voyager_tests_scenario_class.mvel"
-
-/**
- * Template for the automated scenario execution block
- */
-const val dartVoyagerTestScenarioExecutionBlock: ResourcePath = "/dart_voyager_tests_scenario_execution_block.mvel"
+const val dartI18N = "/dart_i18n.mvel"
+const val dartI18NClass = "/dart_i18n_class.mvel"
+const val dartI18NSubClass = "/dart_i18n_subclass.mvel"
+const val dartI18NQuantity = "/dart_i18n_quantity.mvel"
 
 /**
  * Initial template this tool consumes
