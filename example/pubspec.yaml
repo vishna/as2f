@@ -1,0 +1,11 @@
+name: example
+description: Android Strings To Flutter
+version: 0.0.1
+author: Lukasz Wisniewski <luke.cherrish@gmail.com>
+homepage: https://github.com/vishna/as2f
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  as2f:
+    path: ../

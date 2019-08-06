@@ -1,6 +1,6 @@
 name: as2f
-description: Android Strings To Flutter
-version: 0.0.1
+description: Android Strings To Flutter. Takes Android XML files with translations and creates i18n Dart classes out of them to be used inside Flutter projects.
+version: 0.0.2
 author: Lukasz Wisniewski <luke.cherrish@gmail.com>
 homepage: https://github.com/vishna/as2f
 environment:
