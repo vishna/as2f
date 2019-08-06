@@ -21,6 +21,8 @@ flutter packages pub run as2f:codegen
 
 __NOTE__: You can add `--run-once` and `--dry-run` parameters to the above command.
 
+__NOTE__: Running `pub run as2f:codegen` in this project will pick up xmls from `carrots_sample` 🥕🥕
+
 This fetches the jar from [jitpack](https://jitpack.io/#vishna/as2f) containing the code generator and executes it in a watch mode. It will bootstrap `as2f.yaml` file for you. This file describes where your Android string files are and where the generated class should go.
 
 ```
