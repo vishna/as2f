@@ -12,7 +12,7 @@ import java.io.File
 import java.lang.IllegalStateException
 import java.util.*
 
-private val log by lazy { defaultLogger() }
+internal val log by lazy { defaultLogger() }
 
 const val dartI18N = "/dart_i18n.mvel"
 const val dartI18NClass = "/dart_i18n_class.mvel"
