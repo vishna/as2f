@@ -58,6 +58,12 @@ class MyApp extends StatelessWidget {
 }
 ```
 
+If you want to have nice formatting, make sure you have `dart-sdk` in you PATH, it's included with flutter sdk, so you can e.g.:
+
+```
+export PATH="$PATH:/path/to/flutter/bin/cache/dart-sdk/bin"
+```
+
 ## Supported Features
 
 - Normal Strings
