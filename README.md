@@ -10,7 +10,7 @@ Inspired by [flutter_i18n](https://github.com/long1eu/flutter_i18n) project by l
 
 ```yaml
 dev_dependencies:
- as2f: ^0.1.0
+ as2f: ^0.1.1
 ```
 
 Then run the following command.
