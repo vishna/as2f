@@ -2,7 +2,7 @@ package com.eyeem.strings2arb
 
 import dev.vishna.as2f.SModel
 import dev.vishna.as2f.dartI18N
-import dev.vishna.as2f.dartfmt
+import dev.vishna.dartfmt.dartfmt
 import dev.vishna.mvel.interpolate
 import dev.vishna.stringcode.asResource
 
