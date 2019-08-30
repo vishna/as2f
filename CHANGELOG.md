@@ -1,3 +1,7 @@
+# 0.1.3
+
+- reduce lint analyze noise.
+
 # 0.1.2
 
 - improve `dartfmt` location resolution

@@ -1,12 +1,16 @@
 import 'dart:async';
 
+// ignore: implementation_imports
+import 'package:intl/src/plural_rules.dart' as plural_rules;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/src/plural_rules.dart' as plural_rules;
 
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: camel_case_types
 // ignore_for_file: prefer_single_quotes
+// ignore_for_file: omit_local_variable_types
+// ignore_for_file: unnecessary_brace_in_string_interps
+// ignore_for_file: avoid_as
 
 @foreach{language : languages}@{language.emit()}@end{'\n\n'}
 
