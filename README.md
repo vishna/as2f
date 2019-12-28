@@ -16,7 +16,7 @@ dev_dependencies:
 Then run the following command.
 
 ```
-flutter packages pub run as2f:codegen
+flutter pub run as2f:codegen
 ```
 
 __NOTE__: You can add `--run-once` and `--dry-run` parameters to the above command.
