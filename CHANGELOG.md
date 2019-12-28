@@ -1,3 +1,7 @@
+# 0.1.4
+
+- fix as2f broken under Windows OS [issue #4](https://github.com/vishna/as2f/issues/4)
+
 # 0.1.3
 
 - reduce lint analyze noise.
