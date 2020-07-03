@@ -6,7 +6,6 @@ import org.w3c.dom.NodeList
 import java.io.File
 import java.io.InputStream
 import java.lang.IllegalArgumentException
-import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
 data class AndroidStrings(
@@ -129,9 +128,23 @@ fun Map<String, String>.asArbText() : String {
  * very unoptimized converter
  */
 private fun String.toArb() : String {
-    var input = this
+    var input: String = this
+    val regexArgs = Regex("%([1-9]+)s")
+    val regexNums = Regex("%([1-9]+)d")
     replacementMap.forEach { key, value ->
-        input = input.replace(key, value)
+        val findArgs: Boolean = !regexArgs.findAll(key).toList().isNullOrEmpty()
+        val findNums: Boolean  = !regexNums.findAll(key).toList().isNullOrEmpty()
+        when {
+            findArgs -> {
+                input = input.replace(regexArgs, value)
+            }
+            findNums -> {
+                input = input.replace(regexNums, value)
+            }
+            else -> {
+                input = input.replace(key, value)
+            }
+        }
     }
     return input
 }
@@ -139,10 +152,6 @@ private fun String.toArb() : String {
 private val replacementMap = mapOf(
         "%s" to "\${arg}",
         "%d" to "\${num}",
-        "%1\$s" to "\${arg1}",
-        "%2\$s" to "\${arg2}",
-        "%1\$d" to "\${num1}",
-        "%2\$d" to "\${num2}",
         "%%" to "%",
         "\n" to " ",
         "\\\'" to "'",
