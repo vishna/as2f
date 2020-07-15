@@ -8,6 +8,8 @@ import java.io.InputStream
 import java.lang.IllegalArgumentException
 import javax.xml.parsers.DocumentBuilderFactory
 
+private val regexStringArgs = Regex("%([1-9]+)\\\$s")
+private val regexNumArgs = Regex("%([1-9]+)\\\$d")
 data class AndroidStrings(
         val locale: String,
         val strings : List<StringNode>,
@@ -127,24 +129,23 @@ fun Map<String, String>.asArbText() : String {
 /**
  * very unoptimized converter
  */
-private fun String.toArb() : String {
+private fun String.toArb(): String {
     var input: String = this
-    val regexArgs = Regex("%([1-9]+)s")
-    val regexNums = Regex("%([1-9]+)d")
-    replacementMap.forEach { key, value ->
-        val findArgs: Boolean = !regexArgs.findAll(key).toList().isNullOrEmpty()
-        val findNums: Boolean  = !regexNums.findAll(key).toList().isNullOrEmpty()
-        when {
-            findArgs -> {
-                input = input.replace(regexArgs, value)
-            }
-            findNums -> {
-                input = input.replace(regexNums, value)
-            }
-            else -> {
-                input = input.replace(key, value)
-            }
-        }
+
+    val args = regexStringArgs.findAll(input).toList()
+    args.forEach {
+        val argPosition = it.groupValues.last()
+        input = input.replace(it.value, "\${arg$argPosition}")
+    }
+
+    val nums = regexNumArgs.findAll(input).toList()
+    nums.forEach {
+        val argPosition = it.groupValues.last()
+        input = input.replace(it.value, "\${num$argPosition}")
+    }
+
+    replacementMap.forEach { (key, value) ->
+        input = input.replace(key, value)
     }
     return input
 }
