@@ -6,9 +6,10 @@ import org.w3c.dom.NodeList
 import java.io.File
 import java.io.InputStream
 import java.lang.IllegalArgumentException
-import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
+private val regexStringArgs = Regex("%([1-9]+)\\\$s")
+private val regexNumArgs = Regex("%([1-9]+)\\\$d")
 data class AndroidStrings(
         val locale: String,
         val strings : List<StringNode>,
@@ -128,9 +129,22 @@ fun Map<String, String>.asArbText() : String {
 /**
  * very unoptimized converter
  */
-private fun String.toArb() : String {
-    var input = this
-    replacementMap.forEach { key, value ->
+private fun String.toArb(): String {
+    var input: String = this
+
+    val args = regexStringArgs.findAll(input).toList()
+    args.forEach {
+        val argPosition = it.groupValues.last()
+        input = input.replace(it.value, "\${arg$argPosition}")
+    }
+
+    val nums = regexNumArgs.findAll(input).toList()
+    nums.forEach {
+        val argPosition = it.groupValues.last()
+        input = input.replace(it.value, "\${num$argPosition}")
+    }
+
+    replacementMap.forEach { (key, value) ->
         input = input.replace(key, value)
     }
     return input
@@ -139,10 +153,6 @@ private fun String.toArb() : String {
 private val replacementMap = mapOf(
         "%s" to "\${arg}",
         "%d" to "\${num}",
-        "%1\$s" to "\${arg1}",
-        "%2\$s" to "\${arg2}",
-        "%1\$d" to "\${num1}",
-        "%2\$d" to "\${num2}",
         "%%" to "%",
         "\n" to " ",
         "\\\'" to "'",

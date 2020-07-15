@@ -49,9 +49,14 @@ class CoreTest {
     }
 
     @Test fun findArgs() {
-        val expressionWithSomeArgs = "沒有在\${arg1}的\"\${arg2}\"結果"
+        val expressionWithSomeArgs = "沒有在\${arg1}的\"\${arg2}\"結果是\${arg3}\"好的\${arg4}\"好的\${arg5}\"好的\${arg6}\"好的"
         val args = expressionWithSomeArgs.findArgs()
-        args `should contain all` listOf("arg1", "arg2")
+        args `should contain all` listOf("arg1", "arg2", "arg3", "arg4", "arg5", "arg6")
     }
 
+    @Test fun findNums() {
+        val expressionWithSomeArgs = "沒有在\${num1}的\"\${num2}\"結果是\${num3}\"好的\${num4}\"好的\${num5}\"好的\${num6}\"好的"
+        val args = expressionWithSomeArgs.findArgs()
+        args `should contain all` listOf("num1", "num2", "num3", "num4", "num5", "num6")
+    }
 }
