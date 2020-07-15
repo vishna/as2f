@@ -1,3 +1,7 @@
+# 0.1.5
+
+- remove 2 args limit, kudos [@XinyueZ](https://github.com/XinyueZ)
+
 # 0.1.4
 
 - fix as2f broken under Windows OS [issue #4](https://github.com/vishna/as2f/issues/4)
