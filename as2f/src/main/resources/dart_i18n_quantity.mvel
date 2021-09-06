@@ -1,7 +1,10 @@
 String @{key}(@{emitArgs()}) {
     plural_rules.startRuleEvaluation(quantity);
-    final pluralCase = plural_rules.pluralRules["@{locale}"]() as plural_rules.PluralCase;
-    switch (pluralCase) {
+
+    final pluralRulesLocale = plural_rules.pluralRules["@{locale}"];
+    if (pluralRulesLocale == null) return "";
+
+    switch (pluralRulesLocale()) {
 @foreach{item : items}      case plural_rules.PluralCase.@{item.quantity.value}: return "@{item.value}";@end{'\n'}
       default: return "";
     }
